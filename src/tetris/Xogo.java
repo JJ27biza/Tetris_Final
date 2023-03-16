@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author a22javiermm
  */
 public class Xogo {
-
+/*Variable*/
     final static int LADO_CADRADO = 30;
     final int MAX_Y = 600;
     final int MAX_X = 300;
