@@ -14,19 +14,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     Xogo novoXogo;
     Timer timer;
-
+   
     public VentanaPrincipal() {
         initComponents();
         novoXogo = new Xogo(this);
         novoXogo.xerarNovaFicha();
         jPanel1.setFocusable(true);
+      
 
         timer = new Timer((novoXogo.numeroLinas * 25) + 800, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 novoXogo.moverFichaAbaixo();
             }
         });
-        timer.start();
+        timer.stop();
+       
+      //timer.start();
     }
 
     public void pintarCadrado(JLabel lblCadrado) {
@@ -43,6 +46,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public JLabel getPuntuacionLabel() {
         return puntuacionLabel;
     }
+    public void mostrarNumeroLinas(int numeroLinas){
+    
+         getPuntuacionLabel().setText(numeroLinas +" puntos");
+    
+    }
+    
+    public void mostrarFinDoXogo(){
+    
+          
+      
+    
+    }
+    
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,9 +76,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         puntuacionLabel = new javax.swing.JLabel();
         pausaButton = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        iniciarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 700));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 600));
@@ -81,15 +101,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGap(0, 600, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(102, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setForeground(new java.awt.Color(153, 255, 255));
 
+        jLabel1.setForeground(new java.awt.Color(153, 255, 255));
         jLabel1.setText("Puntuación");
+
+        puntuacionLabel.setForeground(new java.awt.Color(153, 255, 255));
 
         pausaButton.setText("Pausa");
         pausaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pausaButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(153, 255, 255));
+        jLabel2.setText("Temporizador");
+
+        iniciarButton.setText("Iniciar");
+        iniciarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iniciarButtonActionPerformed(evt);
             }
         });
 
@@ -99,15 +132,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(puntuacionLabel)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(pausaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iniciarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(puntuacionLabel)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addComponent(pausaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, puntuacionLabel});
@@ -119,9 +164,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(puntuacionLabel)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iniciarButton)
+                .addGap(5, 5, 5)
                 .addComponent(pausaButton)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, puntuacionLabel});
@@ -140,9 +191,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 24, Short.MAX_VALUE))
         );
 
@@ -175,10 +226,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         else{
         
         timer.restart();
+        jPanel1.requestFocus(true);
         }
     }//GEN-LAST:event_pausaButtonActionPerformed
 
- int valor;
+    private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
+        // TODO add your handling code here:
+        timer.start();
+        jPanel1.requestFocus(true);
+        iniciarButton.setEnabled(false);
+        novoXogo.pausa=false;
+        
+        
+       
+        
+            
+    }//GEN-LAST:event_iniciarButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -215,7 +279,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton iniciarButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToggleButton pausaButton;
