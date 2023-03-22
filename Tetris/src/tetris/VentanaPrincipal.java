@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package tetris;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -13,17 +12,60 @@ import javax.swing.JPanel;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaPrincipal
-     */
+    Xogo novoXogo;
+    Timer timer;
+    private int segundos = 0;
+    private int minutos = 0;
+    private int dificultade;
+
     public VentanaPrincipal() {
         initComponents();
-        Xogo novoXogo = new Xogo();
-        pintarCadrado(FichaBarra.xerarLabel());
-        
+        novoXogo = new Xogo(this);
+        novoXogo.xerarNovaFicha();
+        jPanel1.setFocusable(true);
+
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                novoXogo.moverFichaAbaixo();
+                    segundos++;
+                 if (segundos == 60) {
+                    minutos++;
+                    segundos = 0;
+                } else if (minutos == 60) {
+                    
+                    minutos = 0;
+                }
+                Tiempo();
+            }
+        });
+        timer.stop();
+
+        //timer.start();
     }
-    public void pintarCadrado(JLabel lblCadrado){
+
+    public void pintarCadrado(JLabel lblCadrado) {
         jPanel1.add(lblCadrado);
+
+    }
+
+    public void borrarCadrado(JLabel lblCadrado) {
+        jPanel1.remove(lblCadrado);
+        jPanel1.repaint();
+        jPanel1.revalidate();
+    }
+
+    public JLabel getPuntuacionLabel() {
+        return puntuacionLabel;
+    }
+
+    public void mostrarNumeroLinas(int numeroLinas) {
+
+        getPuntuacionLabel().setText(numeroLinas + " puntos");
+
+    }
+
+    public void mostrarFinDoXogo() {
+
     }
 
     /**
@@ -35,42 +77,238 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        puntuacionLabel = new javax.swing.JLabel();
+        pausaButton = new javax.swing.JToggleButton();
+        temporizador = new javax.swing.JLabel();
+        temporizadorLabel = new javax.swing.JLabel();
+        iniciarButton = new javax.swing.JButton();
+        facilButton = new javax.swing.JRadioButton();
+        medioButton = new javax.swing.JRadioButton();
+        dificilButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.setForeground(new java.awt.Color(153, 153, 153));
+        jPanel1.setPreferredSize(new java.awt.Dimension(300, 600));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 262, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 221, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setForeground(new java.awt.Color(153, 255, 255));
+
+        jLabel1.setForeground(new java.awt.Color(153, 255, 255));
+        jLabel1.setText("Puntuación");
+
+        puntuacionLabel.setForeground(new java.awt.Color(153, 255, 255));
+
+        pausaButton.setText("Pausa");
+        pausaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pausaButtonActionPerformed(evt);
+            }
+        });
+
+        temporizador.setForeground(new java.awt.Color(153, 255, 255));
+        temporizador.setText("Temporizador");
+
+        temporizadorLabel.setForeground(new java.awt.Color(153, 255, 255));
+
+        iniciarButton.setText("Iniciar");
+        iniciarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iniciarButtonActionPerformed(evt);
+            }
+        });
+
+        facilButton.setBackground(new java.awt.Color(0, 0, 0));
+        buttonGroup1.add(facilButton);
+        facilButton.setForeground(new java.awt.Color(0, 204, 204));
+        facilButton.setSelected(true);
+        facilButton.setText("Fácil");
+
+        medioButton.setBackground(new java.awt.Color(0, 0, 0));
+        buttonGroup1.add(medioButton);
+        medioButton.setForeground(new java.awt.Color(0, 204, 204));
+        medioButton.setText("Medio");
+
+        dificilButton.setBackground(new java.awt.Color(0, 0, 0));
+        buttonGroup1.add(dificilButton);
+        dificilButton.setForeground(new java.awt.Color(0, 204, 204));
+        dificilButton.setText("Difícil");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iniciarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(puntuacionLabel)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addComponent(pausaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(facilButton)
+                                    .addComponent(temporizadorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(medioButton)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(temporizador, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dificilButton))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, puntuacionLabel});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dificilButton, facilButton, medioButton});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(puntuacionLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iniciarButton)
+                .addGap(5, 5, 5)
+                .addComponent(pausaButton)
+                .addGap(49, 49, 49)
+                .addComponent(temporizador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(temporizadorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141)
+                .addComponent(facilButton)
+                .addGap(18, 18, 18)
+                .addComponent(medioButton)
+                .addGap(18, 18, 18)
+                .addComponent(dificilButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, puntuacionLabel});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(126, 126, 126))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 79, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_D) {
+            novoXogo.moverFichaDereita();
+        }
+        if (key == KeyEvent.VK_A) {
+            novoXogo.moverFichaEsquerda();
+        }
+        if (key == KeyEvent.VK_S) {
+            novoXogo.moverFichaAbaixo();
+        }
+        if (key == KeyEvent.VK_M) {
+            novoXogo.rotarFicha();
+        }
+
+    }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void pausaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausaButtonActionPerformed
+        // TODO add your handling code here:
+        if (pausaButton.isSelected()) {
+            timer.stop();
+            /*facilButton.setEnabled(true);
+            medioButton.setEnabled(true);
+            dificilButton.setEnabled(true);*/
+            
+        } else {
+            //elexirDificultade();
+            //desactivarButton();
+            timer.restart();
+            jPanel1.requestFocus(true);
+        }
+    }//GEN-LAST:event_pausaButtonActionPerformed
+
+    private void elexirDificultade() {
+        if (facilButton.isSelected()) {
+            dificultade = 0;
+            timer.setDelay(timer.getDelay()+dificultade);
+        } else if (medioButton.isSelected()) {
+            dificultade = -100;
+            timer.setDelay(timer.getDelay()+dificultade);
+        } else if (dificilButton.isSelected()) {
+            dificultade = -300;
+            timer.setDelay(timer.getDelay()+dificultade);
+        }
+    }
+
+    private void desactivarButton() {
+        facilButton.setEnabled(false);
+        medioButton.setEnabled(false);
+        dificilButton.setEnabled(false);
+    }
+
+    private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
+        // TODO add your handling code here:
+        elexirDificultade();
+        timer.start();
+        jPanel1.requestFocus(true);
+        iniciarButton.setEnabled(false);
+        novoXogo.pausa = false;
+        desactivarButton();
+    }//GEN-LAST:event_iniciarButtonActionPerformed
+    private void Tiempo() {
+        String texto = (minutos <= 9 ? "0" : "") + minutos + ":" + (segundos <= 9 ? "0" : "") + segundos;
+
+        temporizadorLabel.setText(texto);
+    }
 
     /**
      * @param args the command line arguments
@@ -108,6 +346,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton dificilButton;
+    private javax.swing.JRadioButton facilButton;
+    private javax.swing.JButton iniciarButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton medioButton;
+    private javax.swing.JToggleButton pausaButton;
+    private javax.swing.JLabel puntuacionLabel;
+    private javax.swing.JLabel temporizador;
+    private javax.swing.JLabel temporizadorLabel;
     // End of variables declaration//GEN-END:variables
 }
